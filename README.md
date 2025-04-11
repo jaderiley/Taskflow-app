@@ -10,7 +10,7 @@ The app provides an intuitive interface for task management and includes useful 
 
 ## Features
 
-- ** User Authentication**: 
+- **User Authentication**:
   - Register and log in to your personal account.
   - Session management (login/logout).
   
@@ -23,7 +23,7 @@ The app provides an intuitive interface for task management and includes useful 
   - Sort tasks by due date or priority.
 
 - **Optional Features**:
-  - Dark mode toggle for improved user experience.
+  - Dark mode toggle for improved user experience. 
 
 ---
 
