@@ -6,7 +6,7 @@ TaskFlow is a web-based task management application designed to help users manag
 
 The app provides an intuitive interface for task management and includes useful features like filtering, sorting, and dark mode.
 
----   
+---
 
 ## Features
 
