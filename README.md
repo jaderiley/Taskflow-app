@@ -14,7 +14,7 @@ The app provides an intuitive interface for task management and includes useful 
   - Register and log in to your personal account.
   - Session management (login/logout).
   
-- **Task Management**: 
+- **Task Management**:   
   - Create, read, update, and delete tasks.
   - Each task includes a title, description, due date, priority, and status.
   
