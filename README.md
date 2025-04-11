@@ -45,8 +45,8 @@ The app provides an intuitive interface for task management and includes useful 
   - Frontend: Netlify
   - Backend: Render or Railway
 
----
-
+--- 
+ 
 ## Installation
 
 To set up and run this project locally:
