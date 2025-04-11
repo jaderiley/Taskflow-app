@@ -10,11 +10,11 @@ The app provides an intuitive interface for task management and includes useful 
 
 ## Features
 
-- **User Authentication**: 
+- **User Authentication**:
   - Register and log in to your personal account.
   - Session management (login/logout).
   
-- **Task Management**: 
+- **Task Management**:   
   - Create, read, update, and delete tasks.
   - Each task includes a title, description, due date, priority, and status.
   
@@ -23,7 +23,7 @@ The app provides an intuitive interface for task management and includes useful 
   - Sort tasks by due date or priority.
 
 - **Optional Features**:
-  - Dark mode toggle for improved user experience.
+  - Dark mode toggle for improved user experience. 
 
 ---
 
@@ -45,8 +45,8 @@ The app provides an intuitive interface for task management and includes useful 
   - Frontend: Netlify
   - Backend: Render or Railway
 
----
-
+--- 
+ 
 ## Installation
 
 To set up and run this project locally:
