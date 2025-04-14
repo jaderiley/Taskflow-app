@@ -38,12 +38,21 @@ const RegisterForm = () => {
         body: JSON.stringify({
           username: formData.username,
           email: formData.email,
-          password: formData.password
+          password: formData.password,
         }),
       });
 
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.message || 'Registration failed');
+      // Check if the response has a body
+      let data;
+      try {
+        data = await response.json();
+      } catch {
+        data = null; // Handle cases where the response body is empty
+      }
+
+      if (!response.ok) {
+        throw new Error(data?.message || 'Registration failed');
+      }
 
       navigate('/login'); // Redirect to login after successful registration
     } catch (err) {
