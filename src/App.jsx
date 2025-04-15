@@ -12,7 +12,9 @@ function App() {
         {/* Default route to Login */}
         <Route path="/" element={<LoginForm />} />
         {/* Add other routes here */}
-        <Route path="/register" element={<RegisterForm />} />
+        <Route path="/Register" element={<RegisterForm />} />
+        {/* Add more routes as needed */}
+        <Route path="Register/login" element={<LoginForm />} />
       </Routes>
     </Router>
   );

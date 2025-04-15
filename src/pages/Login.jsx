@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom'; // Import Link
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
@@ -17,28 +17,33 @@ const LoginForm = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setError('');
 
     try {
       setIsLoading(true);
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
 
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.message || 'Login failed');
+      // Get users from localStorage
+      const users = JSON.parse(localStorage.getItem('users')) || [];
 
-      // Store token and redirect
-      localStorage.setItem('taskflowToken', data.token);
-      navigate('/dashboard'); // Redirect to dashboard after login
+      // Check if the user exists and the password matches
+      const user = users.find(
+        (user) => user.email === formData.email && user.password === formData.password
+      );
+
+      if (!user) {
+        setError('Invalid email or password');
+        return;
+      }
+
+      // Simulate login by saving user info to localStorage
+      localStorage.setItem('currentUser', JSON.stringify(user));
+
+      // Redirect to dashboard
+      navigate('/dashboard');
     } catch (err) {
-      setError(err.message);
+      setError('An error occurred during login');
     } finally {
       setIsLoading(false);
     }
@@ -78,7 +83,7 @@ const LoginForm = () => {
       </form>
       
       <p>
-        Don't have an account? <Link to="/register">Register here</Link>
+        Don't have an account? <a href="/Register">Register here</a>
       </p>
     </div>
   );
