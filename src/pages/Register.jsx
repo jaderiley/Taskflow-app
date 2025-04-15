@@ -50,7 +50,7 @@ const RegisterForm = () => {
       localStorage.setItem('users', JSON.stringify(users));
 
       // Redirect to login
-      navigate('/login');
+      navigate('/Login');
     } catch (err) {
       setError('An error occurred during registration');
     } finally {

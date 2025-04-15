@@ -1,0 +1,54 @@
+.navbar {
+    display: flex;
+    justify-content: space-between; /* Space between title and links */
+    align-items: center; /* Center items vertically */
+    background-color: #4CAF50;
+    padding: 10px 20px;
+    color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: fixed; /* Keep the navbar fixed at the top */
+    top: 0;
+    left: 0;
+    width: 100%; /* Make the navbar span the full width of the page */
+    z-index: 1000; /* Ensure the navbar stays above other content */
+    box-sizing: border-box; /* Include padding in width calculations */
+}
+
+.navbar-title {
+    font-size: 1.5rem;
+    cursor: pointer;
+    white-space: nowrap; /* Prevent the title from wrapping */
+}
+
+.navbar-links {
+    display: flex;
+    gap: 15px;
+}
+
+.navbar-link {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    white-space: nowrap; /* Prevent the links from wrapping */
+}
+
+.navbar-link:hover {
+    background-color: #3e8e41;
+}
+
+/* Make the navbar responsive */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column; /* Stack items vertically on smaller screens */
+        align-items: flex-start; /* Align items to the left */
+        padding: 10px;
+    }
+
+    .navbar-links {
+        width: 100%; /* Make links span the full width */
+        justify-content: space-around; /* Space links evenly */
+    }
+}
