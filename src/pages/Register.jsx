@@ -19,7 +19,7 @@ const RegisterForm = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setError('');
 
@@ -30,33 +30,29 @@ const RegisterForm = () => {
 
     try {
       setIsLoading(true);
-      const response = await fetch('/api/auth/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username: formData.username,
-          email: formData.email,
-          password: formData.password,
-        }),
+
+      // Get existing users from localStorage
+      const users = JSON.parse(localStorage.getItem('users')) || [];
+
+      // Check if the email already exists
+      const existingUser = users.find((user) => user.email === formData.email);
+      if (existingUser) {
+        setError('Email already exists');
+        return;
+      }
+
+      // Save the new user
+      users.push({
+        username: formData.username,
+        email: formData.email,
+        password: formData.password
       });
+      localStorage.setItem('users', JSON.stringify(users));
 
-      // Check if the response has a body
-      let data;
-      try {
-        data = await response.json();
-      } catch {
-        data = null; // Handle cases where the response body is empty
-      }
-
-      if (!response.ok) {
-        throw new Error(data?.message || 'Registration failed');
-      }
-
-      navigate('/login'); // Redirect to login after successful registration
+      // Redirect to login
+      navigate('/login');
     } catch (err) {
-      setError(err.message);
+      setError('An error occurred during registration');
     } finally {
       setIsLoading(false);
     }
@@ -118,7 +114,7 @@ const RegisterForm = () => {
       </form>
       
       <p>
-        Already have an account? <a href="/login">Login here</a>
+        Already have an account? <a href="/Register/login">Login</a>
       </p>
     </div>
   );
