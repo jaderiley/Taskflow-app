@@ -4,7 +4,7 @@ import User from '../models/User.js';
 
 // Register a new user
 export const register = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { username, email, password } = req.body;
 
   try {
     // Check if the user already exists
@@ -18,7 +18,7 @@ export const register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     // Create a new user
-    const user = new User({ name, email, password: hashedPassword });
+    const user = new User({ username, email, password: hashedPassword });
 
     // Save the user to the database
     await user.save();
