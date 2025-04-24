@@ -17,33 +17,34 @@ const LoginForm = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
     try {
       setIsLoading(true);
 
-      // Get users from localStorage
-      const users = JSON.parse(localStorage.getItem('users')) || [];
+      const response = await fetch('http://localhost:5000/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
 
-      // Check if the user exists and the password matches
-      const user = users.find(
-        (user) => user.email === formData.email && user.password === formData.password
-      );
-
-      if (!user) {
-        setError('Invalid email or password');
-        return;
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || 'Login failed');
       }
 
-      // Simulate login by saving user info to localStorage
-      localStorage.setItem('currentUser', JSON.stringify(user));
+      // Save token and user info
+      localStorage.setItem('taskflowToken', data.token);
+      localStorage.setItem('currentUser', JSON.stringify(data.user));
 
-      // Redirect to dashboard
       navigate('/dashboard');
     } catch (err) {
-      setError('An error occurred during login');
+      setError(err.message);
     } finally {
       setIsLoading(false);
     }
