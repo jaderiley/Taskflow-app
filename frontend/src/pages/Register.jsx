@@ -19,7 +19,7 @@ const RegisterForm = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
@@ -31,28 +31,24 @@ const RegisterForm = () => {
     try {
       setIsLoading(true);
 
-      // Get existing users from localStorage
-      const users = JSON.parse(localStorage.getItem('users')) || [];
+      const response = await fetch('http://localhost:5000/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username: formData.username,
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
 
-      // Check if the email already exists
-      const existingUser = users.find((user) => user.email === formData.email);
-      if (existingUser) {
-        setError('Email already exists');
-        return;
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || 'Registration failed');
       }
 
-      // Save the new user
-      users.push({
-        username: formData.username,
-        email: formData.email,
-        password: formData.password
-      });
-      localStorage.setItem('users', JSON.stringify(users));
-
-      // Redirect to login
-      navigate('/Login');
+      navigate('/');
     } catch (err) {
-      setError('An error occurred during registration');
+      setError(err.message);
     } finally {
       setIsLoading(false);
     }
