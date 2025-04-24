@@ -11,12 +11,12 @@ import {
 const router = express.Router();
 
 router.route('/')
-  .get(protect, getAllTasks)
-  .post(protect, createTask);
+  .get(protect, getAllTasks) // Protect this route
+  .post(protect, createTask); // Protect this route
 
 router.route('/:id')
-  .get(protect, getTask)
-  .put(protect, updateTask)
-  .delete(protect, deleteTask);
+  .get(protect, getTask) // Protect this route
+  .put(protect, updateTask) // Protect this route
+  .delete(protect, deleteTask); // Protect this route
 
-export default router; // Use ES module export
+export default router;
