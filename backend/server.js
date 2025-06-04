@@ -3,20 +3,23 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import taskRoutes from './routes/taskRoutes.js'; // Import task routes
-import taskRoutes from './routes/taskRoutes.js'; // Import task routes
+import authRoutes from './routes/authRoutes.js'; // Import auth routes
+import { register, login } from './controllers/authController.js';
+
 dotenv.config();
 
 const app = express();
 
 // CORS setup
 const corsOptions = {
-  origin: 'http://localhost:3000', // Adjust this based on where your frontend is running
+  origin: 'http://localhost:5173', // Adjust this based on where your frontend is running
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
 };
 app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use('/api/tasks', taskRoutes);
+app.use('/api/auth', authRoutes); // Add this line for auth routes
 
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI)
@@ -33,7 +36,6 @@ app.use((err, req, res, next) => {
   console.error('❌ Unhandled error:', err);
   res.status(500).json({ message: 'Internal Server Error' });
 });
-import { register, login } from './controllers/authController.js';
 
 // Register a new user
 app.post('/register', register);
@@ -45,6 +47,4 @@ app.post('/login', login);
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
-
-  
 });
