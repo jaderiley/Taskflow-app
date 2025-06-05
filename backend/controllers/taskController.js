@@ -52,25 +52,18 @@ export const getTask = async (req, res) => {
 // @access  Private
 export const createTask = async (req, res) => {
     try {
-        const { title, description, dueDate, priority, status } = req.body;
-
-        if (!title || !description) {
-            return res.status(400).json({ message: 'Title and description are required' });
-        }
-
-        const newTask = new Task({
+        const { title, description, dueDate, image } = req.body;
+        const task = new Task({
             title,
             description,
-            dueDate: dueDate || null,
-            priority: priority || 'medium',
-            status: status || 'todo',
-            userId: req.user.id,
+            dueDate,
+            image, // base64 string
+            user: req.user._id,
         });
-
-        const savedTask = await newTask.save();
-        res.status(201).json(savedTask);
-    } catch (error) {
-        res.status(500).json({ message: 'Server Error', error: error.message });
+        await task.save();
+        res.status(201).json(task);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
     }
 };
 

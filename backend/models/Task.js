@@ -29,6 +29,9 @@ const TaskSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true
+  },
+  image: { // base64 or URL
+    type: String
   }
 }, { timestamps: true });
 
