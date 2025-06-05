@@ -19,7 +19,7 @@ function App() {
         <Route path="/" element={<LoginForm />} />
         <Route path="/register" element={<RegisterForm />} />
         <Route path="/dashboard" element={<Dashboard tasks={tasks} />} /> {/* Pass tasks */}
-        <Route path="/create-task" element={<CreateTask onAddTask={addTask} />} /> {/* Pass addTask */}
+        <Route path="/create-task" element={<CreateTask />} />
       </Routes>
     </Router>
   );

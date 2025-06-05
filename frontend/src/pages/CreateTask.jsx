@@ -33,29 +33,36 @@ const CreateTask = ({ onAddTask }) => {
 
     const handleAddTask = async () => {
         if (taskInput.title.trim() && taskInput.details.trim()) {
-            onAddTask({
-                id: Date.now(),
-                ...taskInput,
-                image: imageBase64,
-                completed: false,
-            });
+            try {
+                const token = localStorage.getItem('taskflowToken');
+                const response = await fetch('http://localhost:5000/api/tasks', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                    },
+                    body: JSON.stringify({
+                        title: taskInput.title,
+                        description: taskInput.details,
+                        dueDate: taskInput.deadline,
+                        image: imageBase64,
+                    }),
+                    credentials: 'include',
+                });
 
-            // Clear input fields
-            setTaskInput({
-                title: "",
-                deadline: "",
-                details: "",
-            });
-            setImageBase64(""); // Clear image preview
+                if (!response.ok) {
+                    throw new Error('Failed to create task');
+                }
 
-            // Show success message
-            setSuccessMessage("Task added successfully!");
+                // Optionally show a success message
+                setSuccessMessage("Task added successfully!");
+                setTimeout(() => setSuccessMessage(""), 2000);
 
-            // Hide success message after 3 seconds
-            setTimeout(() => setSuccessMessage(""), 3000);
-
-            // Redirect to dashboard
-            navigate("/dashboard");
+                // Redirect to dashboard (which will fetch tasks from backend)
+                navigate("/dashboard");
+            } catch (err) {
+                setSuccessMessage(err.message);
+            }
         }
     };
 
