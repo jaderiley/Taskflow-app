@@ -6,24 +6,10 @@ import User from '../models/User.js';
 // @access  Private
 export const getAllTasks = async (req, res) => {
     try {
-        const userId = req.user.id;
-        const { status } = req.query;
-        const sort = {};
-
-        if (req.query.sortBy) {
-            const parts = req.query.sortBy.split(':');
-            sort[parts[0]] = parts[1] === 'desc' ? -1 : 1;
-        }
-
-        const query = { userId };
-        if (status) {
-            query.status = status;
-        }
-
-        const tasks = await Task.find(query).sort(sort).exec();
-        res.status(200).json(tasks);
-    } catch (error) {
-        res.status(500).json({ message: 'Server Error', error: error.message });
+        const tasks = await Task.find({ userId: req.user._id }); // Only this user's tasks
+        res.json(tasks);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
     }
 };
 
@@ -58,7 +44,7 @@ export const createTask = async (req, res) => {
             description,
             dueDate,
             image, // base64 string
-            user: req.user._id,
+            userId: req.user._id, // <-- FIXED
         });
         await task.save();
         res.status(201).json(task);
