@@ -8,8 +8,8 @@ const CreateTask = ({ onAddTask }) => {
         title: "",
         deadline: "",
         details: "",
-        image: null,
     });
+    const [imageBase64, setImageBase64] = useState("");
     const [successMessage, setSuccessMessage] = useState(""); // State for success message
     const navigate = useNavigate();
 
@@ -21,25 +21,22 @@ const CreateTask = ({ onAddTask }) => {
         }));
     };
 
-    const handleImageUpload = (e) => {
+    const handleImageChange = (e) => {
         const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = () => {
-                setTaskInput((prev) => ({
-                    ...prev,
-                    image: reader.result,
-                }));
-            };
-            reader.readAsDataURL(file);
-        }
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setImageBase64(reader.result);
+        };
+        reader.readAsDataURL(file);
     };
 
-    const handleAddTask = () => {
+    const handleAddTask = async () => {
         if (taskInput.title.trim() && taskInput.details.trim()) {
             onAddTask({
                 id: Date.now(),
                 ...taskInput,
+                image: imageBase64,
                 completed: false,
             });
 
@@ -48,8 +45,8 @@ const CreateTask = ({ onAddTask }) => {
                 title: "",
                 deadline: "",
                 details: "",
-                image: null,
             });
+            setImageBase64(""); // Clear image preview
 
             // Show success message
             setSuccessMessage("Task added successfully!");
@@ -102,11 +99,11 @@ const CreateTask = ({ onAddTask }) => {
                 <input
                     type="file"
                     accept="image/*"
-                    onChange={handleImageUpload}
+                    onChange={handleImageChange}
                 />
-                {taskInput.image && (
+                {imageBase64 && (
                     <img
-                        src={taskInput.image}
+                        src={imageBase64}
                         alt="Task Preview"
                         className="image-preview"
                     />
