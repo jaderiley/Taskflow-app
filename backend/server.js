@@ -17,6 +17,7 @@ const corsOptions = {
   credentials: true, // <--- ADD THIS LINE
 };
 app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // Add this line after app.use(cors(corsOptions))
 
 app.use(express.json());
 app.use('/api/tasks', taskRoutes);
