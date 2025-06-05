@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import taskRoutes from './routes/taskRoutes.js'; // Import task routes
 import authRoutes from './routes/authRoutes.js'; // Import auth routes
-import { register, login } from './controllers/authController.js';
+
 
 dotenv.config();
 
@@ -12,8 +12,9 @@ const app = express();
 
 // CORS setup
 const corsOptions = {
-  origin: 'http://localhost:5173', // Adjust this based on where your frontend is running
+  origin: 'http://localhost:5173', // No trailing slash!
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true, // <--- ADD THIS LINE
 };
 app.use(cors(corsOptions));
 
@@ -38,10 +39,10 @@ app.use((err, req, res, next) => {
 });
 
 // Register a new user
-app.post('/register', register);
+// app.post('/register', register);
 
 // Login an existing user
-app.post('/login', login);
+// app.post('/login', login);
 
 // Start server
 const PORT = process.env.PORT || 5000;

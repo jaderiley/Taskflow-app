@@ -31,6 +31,7 @@ const LoginForm = () => {
           email: formData.email,
           password: formData.password,
         }),
+        credentials: 'include', // <-- ADD THIS LINE
       });
 
       const data = await response.json();
