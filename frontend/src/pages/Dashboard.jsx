@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Navbar from '../components/Navbar'; // Import Navbar
-import TaskCard from '../components/TaskCard'; // Import TaskCard
-import './Dashboard.css';
+import Navbar from '../components/Navbar';
+import TaskCard from '../components/TaskCard';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 
 const Dashboard = () => {
     const [tasks, setTasks] = useState([]);
-    const [editingTask, setEditingTask] = useState(null); // State to track the task being edited
-    const [editedTask, setEditedTask] = useState({}); // State to store the edited task details
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -81,27 +83,37 @@ const Dashboard = () => {
     };
 
     return (
-        <div className="dashboard">
-            <Navbar /> {/* Add Navbar */}
-            <header className="dashboard-header">
-                <h1>Task Flow Dashboard</h1>
-            </header>
-            <div className="task-list">
-                {tasks.length === 0 ? (
-                    <p>No tasks available. Add a new task!</p>
-                ) : (
-                    tasks.map((task) => (
-                        <TaskCard
-                            key={task._id}
-                            task={task}
-                            toggleTaskCompletion={toggleTaskCompletion}
-                            deleteTask={deleteTask}
-                            startEditingTask={startEditingTask}
-                        />
-                    ))
-                )}
-            </div>
-        </div>
+        <>
+            <Navbar />
+            <Container maxWidth="lg" sx={{ pt: 3 }}>
+                <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
+                    <Typography variant="h4" fontWeight={700}>Your Tasks</Typography>
+                    <Button variant="contained" color="primary" onClick={() => navigate('/create-task')}>
+                        Add Task
+                    </Button>
+                </Box>
+                <Grid container spacing={4} alignItems="flex-start">
+                    {tasks.length === 0 ? (
+                        <Grid item xs={12}>
+                            <Typography color="text.secondary" align="center">
+                                No tasks available. Add a new task!
+                            </Typography>
+                        </Grid>
+                    ) : (
+                        tasks.map(task => (
+                            <Grid item xs={12} sm={6} md={4} key={task._id}>
+                                <TaskCard
+                                    task={task}
+                                    toggleTaskCompletion={toggleTaskCompletion}
+                                    deleteTask={deleteTask}
+                                    startEditingTask={startEditingTask}
+                                />
+                            </Grid>
+                        ))
+                    )}
+                </Grid>
+            </Container>
+        </>
     );
 };
 
