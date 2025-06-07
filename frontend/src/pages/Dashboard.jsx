@@ -27,17 +27,57 @@ const Dashboard = () => {
         fetchTasks();
     }, []);
 
-    const toggleTaskCompletion = (id) => {
-        // Logic for toggling task completion
+    const toggleTaskCompletion = async (id) => {
+        const token = localStorage.getItem('taskflowToken');
+        const task = tasks.find(t => t._id === id);
+        const newStatus = task.status === 'completed' ? 'todo' : 'completed';
+        const response = await fetch(`http://localhost:5000/api/tasks/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+            credentials: 'include',
+            body: JSON.stringify({ status: newStatus }),
+        });
+        if (response.ok) {
+            const updatedTask = await response.json();
+            setTasks(tasks.map(t => t._id === id ? updatedTask : t));
+        }
     };
 
-    const deleteTask = (id) => {
-        // Logic for deleting a task
+    const deleteTask = async (id) => {
+        const token = localStorage.getItem('taskflowToken');
+        const response = await fetch(`http://localhost:5000/api/tasks/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+            credentials: 'include',
+        });
+        if (response.ok) {
+            setTasks(tasks.filter(task => task._id !== id));
+        }
     };
 
-    const startEditingTask = (task) => {
-        setEditingTask(task.id);
-        setEditedTask(task);
+    const startEditingTask = async (task) => {
+        const newTitle = prompt("Edit task title:", task.title);
+        if (newTitle && newTitle !== task.title) {
+            const token = localStorage.getItem('taskflowToken');
+            const response = await fetch(`http://localhost:5000/api/tasks/${task._id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+                credentials: 'include',
+                body: JSON.stringify({ title: newTitle }),
+            });
+            if (response.ok) {
+                const updatedTask = await response.json();
+                setTasks(tasks.map(t => t._id === task._id ? updatedTask : t));
+            }
+        }
     };
 
     return (
@@ -52,7 +92,7 @@ const Dashboard = () => {
                 ) : (
                     tasks.map((task) => (
                         <TaskCard
-                            key={task.id}
+                            key={task._id}
                             task={task}
                             toggleTaskCompletion={toggleTaskCompletion}
                             deleteTask={deleteTask}

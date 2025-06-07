@@ -21,10 +21,10 @@ const TaskCard = ({ task, toggleTaskCompletion, deleteTask, startEditingTask }) 
                 )}
             </div>
             <div className="task-actions">
-                <button onClick={() => toggleTaskCompletion(task.id)}>
-                    {task.completed ? 'Mark Incomplete' : 'Mark Complete'}
+                <button onClick={() => toggleTaskCompletion(task._id)}>
+                    {task.status === 'completed' ? 'Mark Incomplete' : 'Mark Complete'}
                 </button>
-                <button onClick={() => deleteTask(task.id)}>Delete</button>
+                <button onClick={() => deleteTask(task._id)}>Delete</button>
                 <button onClick={() => startEditingTask(task)}>Edit</button>
             </div>
         </div>
