@@ -85,33 +85,39 @@ const Dashboard = () => {
     return (
         <>
             <Navbar />
-            <Container maxWidth="lg" sx={{ pt: 3 }}>
+            <Container maxWidth="lg" sx={{ pt: '64px' }} disableGutters>
                 <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
                     <Typography variant="h4" fontWeight={700}>Your Tasks</Typography>
-                    <Button variant="contained" color="primary" onClick={() => navigate('/create-task')}>
-                        Add Task
-                    </Button>
                 </Box>
-                <Grid container spacing={4} alignItems="flex-start">
-                    {tasks.length === 0 ? (
-                        <Grid item xs={12}>
-                            <Typography color="text.secondary" align="center">
-                                No tasks available. Add a new task!
-                            </Typography>
-                        </Grid>
-                    ) : (
-                        tasks.map(task => (
-                            <Grid item xs={12} sm={6} md={4} key={task._id}>
-                                <TaskCard
-                                    task={task}
-                                    toggleTaskCompletion={toggleTaskCompletion}
-                                    deleteTask={deleteTask}
-                                    startEditingTask={startEditingTask}
-                                />
-                            </Grid>
-                        ))
-                    )}
-                </Grid>
+                {tasks.length === 0 ? (
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      minHeight: '60vh', // Adjust as needed
+                      width: '100%',
+                    }}
+                  >
+                    <Typography color="text.secondary" align="center">
+                      No tasks available. Add a new task!
+                    </Typography>
+                  </Box>
+                ) : (
+                  <Grid container spacing={4} alignItems="flex-start" justifyContent="flex-start">
+                    {tasks.map(task => (
+                      <Grid item xs={12} sm={6} md={4} key={task._id}>
+                        <TaskCard
+                          task={task}
+                          toggleTaskCompletion={toggleTaskCompletion}
+                          deleteTask={deleteTask}
+                          startEditingTask={startEditingTask}
+                        />
+                      </Grid>
+                    ))}
+                  </Grid>
+                )}
             </Container>
         </>
     );
