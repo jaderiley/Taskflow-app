@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Container from '@mui/material/Container';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import Link from '@mui/material/Link';
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
@@ -31,7 +38,7 @@ const LoginForm = () => {
           email: formData.email,
           password: formData.password,
         }),
-        credentials: 'include', // <-- ADD THIS LINE
+        credentials: 'include',
       });
 
       const data = await response.json();
@@ -39,7 +46,6 @@ const LoginForm = () => {
         throw new Error(data.message || 'Login failed');
       }
 
-      // Save token and user info
       localStorage.setItem('taskflowToken', data.token);
       localStorage.setItem('currentUser', JSON.stringify(data.user));
 
@@ -52,42 +58,53 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="auth-form-container">
-      <h2>Welcome Back</h2>
-      <form onSubmit={handleSubmit} className="auth-form">
-        <div className="form-group">
-          <label>Email</label>
-          <input
-            type="email"
+    <Container maxWidth="xs" sx={{ pt: 10 }}>
+      <Paper elevation={4} sx={{ p: 4, borderRadius: 3 }}>
+        <Typography variant="h4" fontWeight={700} align="center" mb={3}>
+          Welcome Back
+        </Typography>
+        <Box component="form" onSubmit={handleSubmit} display="flex" flexDirection="column" gap={2}>
+          <TextField
+            label="Email"
             name="email"
+            type="email"
             value={formData.email}
             onChange={handleInputChange}
             required
+            fullWidth
           />
-        </div>
-        
-        <div className="form-group">
-          <label>Password</label>
-          <input
-            type="password"
+          <TextField
+            label="Password"
             name="password"
+            type="password"
             value={formData.password}
             onChange={handleInputChange}
             required
+            fullWidth
           />
-        </div>
-
-        {error && <div className="error-message">{error}</div>}
-        
-        <button type="submit" disabled={isLoading}>
-          {isLoading ? 'Logging in...' : 'Login'}
-        </button>
-      </form>
-      
-      <p>
-        Don't have an account? <a href="/register">Register here</a>
-      </p>
-    </div>
+          {error && (
+            <Typography color="error" align="center">
+              {error}
+            </Typography>
+          )}
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            disabled={isLoading}
+            sx={{ mt: 1 }}
+          >
+            {isLoading ? 'Logging in...' : 'Login'}
+          </Button>
+        </Box>
+        <Typography align="center" sx={{ mt: 2 }}>
+          Don't have an account?{' '}
+          <Link href="/register" underline="hover" color="primary">
+            Register here
+          </Link>
+        </Typography>
+      </Paper>
+    </Container>
   );
 };
 
