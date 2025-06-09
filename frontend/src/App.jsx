@@ -4,6 +4,7 @@ import LoginForm from './pages/Login';
 import RegisterForm from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import CreateTask from './pages/CreateTask';
+import UserProfile from './pages/UserProfile';
 import './App.css';
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route path="/register" element={<RegisterForm />} />
         <Route path="/dashboard" element={<Dashboard tasks={tasks} />} /> {/* Pass tasks */}
         <Route path="/create-task" element={<CreateTask />} />
+        <Route path="/profile" element={<UserProfile />} />
       </Routes>
     </Router>
   );

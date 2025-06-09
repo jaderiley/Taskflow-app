@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import taskRoutes from './routes/taskRoutes.js'; // Import task routes
 import authRoutes from './routes/authRoutes.js'; // Import auth routes
+import profileRoutes from './routes/profileRoutes.js'; // Import profile routes
 
 
 dotenv.config();
@@ -24,6 +25,7 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
 app.use('/api/tasks', taskRoutes);
 app.use('/api/auth', authRoutes); // Add this line for auth routes
+app.use('/api/profile', profileRoutes); // Add this line for profile routes
 
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI)

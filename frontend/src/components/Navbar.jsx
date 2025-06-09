@@ -49,6 +49,13 @@ const Navbar = () => {
           >
             Add Task
           </Button>
+          <Button
+            color="inherit"
+            sx={{ fontWeight: 600, textTransform: "none", ml: 2 }}
+            onClick={() => navigate("/profile")}
+          >
+            Profile
+          </Button>
         </Box>
       </Toolbar>
     </AppBar>
