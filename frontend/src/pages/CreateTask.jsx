@@ -7,12 +7,16 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
+import MenuItem from '@mui/material/MenuItem';
+
+const LIST_OPTIONS = ["Work", "School", "General"];
 
 const CreateTask = () => {
     const [taskInput, setTaskInput] = useState({
         title: "",
         deadline: "",
         details: "",
+        list: "General", // Default value
     });
     const [imageBase64, setImageBase64] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
@@ -51,6 +55,7 @@ const CreateTask = () => {
                         description: taskInput.details,
                         dueDate: taskInput.deadline,
                         image: imageBase64,
+                        list: taskInput.list, // <-- send list
                     }),
                     credentials: 'include',
                 });
@@ -109,6 +114,20 @@ const CreateTask = () => {
                             required
                             fullWidth
                         />
+                        <TextField
+                            select
+                            label="Task List"
+                            name="list"
+                            value={taskInput.list}
+                            onChange={handleInputChange}
+                            fullWidth
+                        >
+                            {LIST_OPTIONS.map(option => (
+                                <MenuItem key={option} value={option}>
+                                    {option}
+                                </MenuItem>
+                            ))}
+                        </TextField>
                         <Button variant="outlined" component="label">
                             Upload Image
                             <input type="file" accept="image/*" hidden onChange={handleImageChange} />

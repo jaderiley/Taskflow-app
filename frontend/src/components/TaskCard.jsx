@@ -8,6 +8,7 @@ import Box from '@mui/material/Box';
 
 const TaskCard = ({ task, toggleTaskCompletion, deleteTask, startEditingTask }) => (
   <Card
+    className="task-card"
     sx={{
       minWidth: 300,
       maxWidth: 350,
@@ -20,6 +21,8 @@ const TaskCard = ({ task, toggleTaskCompletion, deleteTask, startEditingTask }) 
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
+      transition: 'transform 0.18s, box-shadow 0.18s',
+      perspective: 600,
     }}
   >
     {task.image && (
@@ -41,7 +44,16 @@ const TaskCard = ({ task, toggleTaskCompletion, deleteTask, startEditingTask }) 
       />
     )}
     <CardContent sx={{ width: '100%', textAlign: 'center' }}>
-      <Typography variant="h6" component="div" sx={{ fontWeight: 600, mb: 1 }}>
+      <Typography
+        variant="h6"
+        component="div"
+        sx={{
+          fontWeight: 600,
+          mb: 1,
+          color: 'white', // <-- Make the title white
+          textShadow: '0 1px 4px rgba(0,0,0,0.4)', // Optional: add a subtle shadow for readability
+        }}
+      >
         {task.title}
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
