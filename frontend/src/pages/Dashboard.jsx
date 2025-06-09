@@ -129,6 +129,8 @@ const Dashboard = () => {
                     py: 4,
                     minHeight: "100vh",
                     background: "rgba(35,25,51,0.92)",
+                    borderTopLeftRadius: 24, // <-- Add this for a soft corner
+                    ml: '220px', // Ensure content doesn't go under sidebar if needed
                 }}>
                     <EditTaskDialog
                         open={dialogOpen}
@@ -136,40 +138,50 @@ const Dashboard = () => {
                         task={editingTask}
                         onSave={handleDialogSave}
                     />
-                    <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
-                        <Typography
-                          variant="h4"
-                          fontWeight={700}
-                          sx={{
-                            background: "linear-gradient(90deg, #a259ff, #9446c9)",
-                            WebkitBackgroundClip: "text",
-                            WebkitTextFillColor: "transparent",
-                            display: "inline-block"
-                          }}
+                    <Box
+                      display="flex"
+                      alignItems="center"
+                      mb={4}
+                      sx={{
+                        width: "100%",
+                        gap: 2,
+                        // Remove justifyContent: "space-between"
+                      }}
+                    >
+                      <Typography
+                        variant="h4"
+                        fontWeight={700}
+                        sx={{
+                          background: "linear-gradient(90deg, #a259ff, #9446c9)",
+                          WebkitBackgroundClip: "text",
+                          WebkitTextFillColor: "transparent",
+                          display: "inline-block",
+                          mr: 3, // Add some space between title and filter
+                        }}
+                      >
+                        Your Tasks
+                      </Typography>
+                      {/* Filter Buttons - now right next to the title */}
+                      <ButtonGroup variant="outlined" color="primary">
+                        <Button
+                          variant={filter === 'all' ? 'contained' : 'outlined'}
+                          onClick={() => setFilter('all')}
                         >
-                          Your Tasks
-                        </Typography>
-                        {/* Filter Buttons */}
-                        <ButtonGroup variant="outlined" color="primary">
-                            <Button
-                                variant={filter === 'all' ? 'contained' : 'outlined'}
-                                onClick={() => setFilter('all')}
-                            >
-                                All
-                            </Button>
-                            <Button
-                                variant={filter === 'ongoing' ? 'contained' : 'outlined'}
-                                onClick={() => setFilter('ongoing')}
-                            >
-                                Ongoing
-                            </Button>
-                            <Button
-                                variant={filter === 'completed' ? 'contained' : 'outlined'}
-                                onClick={() => setFilter('completed')}
-                            >
-                                Completed
-                            </Button>
-                        </ButtonGroup>
+                          All
+                        </Button>
+                        <Button
+                          variant={filter === 'ongoing' ? 'contained' : 'outlined'}
+                          onClick={() => setFilter('ongoing')}
+                        >
+                          Ongoing
+                        </Button>
+                        <Button
+                          variant={filter === 'completed' ? 'contained' : 'outlined'}
+                          onClick={() => setFilter('completed')}
+                        >
+                          Completed
+                        </Button>
+                      </ButtonGroup>
                     </Box>
 
                     {/* Show sections based on filter */}
