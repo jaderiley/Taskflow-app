@@ -19,7 +19,9 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions)); // Add this line after app.use(cors(corsOptions))
 
-app.use(express.json());
+// Increase JSON body size limit to 10MB (or more if needed)
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
 app.use('/api/tasks', taskRoutes);
 app.use('/api/auth', authRoutes); // Add this line for auth routes
 

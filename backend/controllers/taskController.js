@@ -38,13 +38,16 @@ export const getTask = async (req, res) => {
 // @access  Private
 export const createTask = async (req, res) => {
     try {
-        const { title, description, dueDate, image } = req.body;
+        const { title, description, dueDate, priority, status, image, list } = req.body;
         const task = new Task({
             title,
             description,
             dueDate,
-            image, // base64 string
-            userId: req.user._id, // <-- FIXED
+            priority,
+            status,
+            image,
+            list, // <-- Make sure this is included!
+            userId: req.user._id,
         });
         await task.save();
         res.status(201).json(task);

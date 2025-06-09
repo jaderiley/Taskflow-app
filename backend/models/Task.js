@@ -2,37 +2,18 @@
 import mongoose from 'mongoose';
 
 const TaskSchema = new mongoose.Schema({
-  title: {
+  title: { type: String, required: true },
+  description: String,
+  dueDate: Date,
+  priority: { type: String, default: "medium" },
+  status: { type: String, default: "todo" },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  image: String,
+  list: {
     type: String,
-    required: true,
-    trim: true
+    enum: ["Work", "School", "General"],
+    default: "General"
   },
-  description: {
-    type: String,
-    required: true,
-    trim: true
-  },
-  dueDate: {
-    type: Date
-  },
-  priority: {
-    type: String,
-    enum: ['low', 'medium', 'high'],
-    default: 'medium'
-  },
-  status: {
-    type: String,
-    enum: ['todo', 'in-progress', 'completed'],
-    default: 'todo'
-  },
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
-  },
-  image: { // base64 or URL
-    type: String
-  }
 }, { timestamps: true });
 
-export default mongoose.model('Task', TaskSchema);
+export default mongoose.model("Task", TaskSchema);
