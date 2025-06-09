@@ -14,10 +14,12 @@ const Navbar = () => {
     <AppBar
       position="fixed"
       sx={{
-        background: "#9446c9",
-        boxShadow: 1,
+        background: "linear-gradient(90deg, #9446c9 60%, #a259ff 100%)",
+        boxShadow: "0 4px 24px 0 rgba(148,70,201,0.10)",
         height: 64,
         justifyContent: "center",
+        zIndex: 1300,
+        borderBottom: "1.5px solid rgba(255,255,255,0.10)", // <-- Add this line
       }}
     >
       <Toolbar

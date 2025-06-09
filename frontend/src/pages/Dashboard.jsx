@@ -9,6 +9,7 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Sidebar from '../components/Sidebar';
+import Divider from '@mui/material/Divider';
 
 const TASK_LISTS = ["All", "Work", "School", "General"];
 
@@ -128,9 +129,13 @@ const Dashboard = () => {
                     px: 4,
                     py: 4,
                     minHeight: "100vh",
-                    background: "rgba(35,25,51,0.92)",
-                    borderTopLeftRadius: 24, // <-- Add this for a soft corner
-                    ml: '220px', // Ensure content doesn't go under sidebar if needed
+                    background: "linear-gradient(135deg, rgba(35,25,51,0.96) 60%, rgba(148,70,201,0.10) 100%)",
+                    borderTopLeftRadius: 32,
+                    boxShadow: "0 12px 48px 0 rgba(31, 38, 135, 0.22), 0 1.5px 0 0 rgba(255,255,255,0.08)",
+                    ml: '220px',
+                    mt: 0,
+                    borderLeft: "1.5px solid rgba(255,255,255,0.10)",
+                    backdropFilter: "blur(4px)", // subtle glass effect
                 }}>
                     <EditTaskDialog
                         open={dialogOpen}
@@ -145,7 +150,6 @@ const Dashboard = () => {
                       sx={{
                         width: "100%",
                         gap: 2,
-                        // Remove justifyContent: "space-between"
                       }}
                     >
                       <Typography
@@ -156,13 +160,23 @@ const Dashboard = () => {
                           WebkitBackgroundClip: "text",
                           WebkitTextFillColor: "transparent",
                           display: "inline-block",
-                          mr: 3, // Add some space between title and filter
+                          mr: 3,
+                          letterSpacing: 1,
+                          textShadow: "0 2px 12px rgba(148,70,201,0.18)",
                         }}
                       >
                         Your Tasks
                       </Typography>
-                      {/* Filter Buttons - now right next to the title */}
-                      <ButtonGroup variant="outlined" color="primary">
+                      <ButtonGroup
+                        variant="outlined"
+                        color="primary"
+                        sx={{
+                          background: "rgba(255,255,255,0.08)",
+                          borderRadius: 2,
+                          boxShadow: "0 2px 12px rgba(148,70,201,0.10)",
+                          backdropFilter: "blur(6px)",
+                        }}
+                      >
                         <Button
                           variant={filter === 'all' ? 'contained' : 'outlined'}
                           onClick={() => setFilter('all')}
@@ -187,9 +201,21 @@ const Dashboard = () => {
                     {/* Show sections based on filter */}
                     {(filter === 'all' || filter === 'ongoing') && (
                         <>
-                            <Typography variant="h5" fontWeight={600} align="left" mb={3} sx={{ ml: 1 }}>
-                                Ongoing Tasks
+                            <Typography
+                              variant="h5"
+                              fontWeight={600}
+                              align="left"
+                              mb={3}
+                              sx={{
+                                ml: 1,
+                                letterSpacing: 1,
+                                color: "#fff",
+                                textShadow: "0 2px 12px rgba(148,70,201,0.18)",
+                              }}
+                            >
+                              Ongoing Tasks
                             </Typography>
+                            <Divider sx={{ width: "100%", mb: 3, borderColor: "rgba(255,255,255,0.10)" }} />
                             {ongoingTasks.length === 0 ? (
                                 <Typography color="text.secondary" align="center" mb={4}>
                                     No ongoing tasks!
@@ -232,6 +258,7 @@ const Dashboard = () => {
                             <Typography variant="h5" fontWeight={600} align="left" mb={3} sx={{ ml: 1, mt: 6 }}>
                                 Completed Tasks
                             </Typography>
+                            <Divider sx={{ width: "100%", mb: 3, borderColor: "rgba(255,255,255,0.10)" }} />
                             {completedTasks.length === 0 ? (
                                 <Typography color="text.secondary" align="center">
                                     No completed tasks yet!
